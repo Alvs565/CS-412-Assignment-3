@@ -157,4 +157,4 @@ if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
 
 # Declarations to reference media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
