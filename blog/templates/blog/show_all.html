@@ -19,7 +19,11 @@
             </p>
         </div>
         <a href="{% url 'article' article.pk %}"> <!-- Calls the article function-->
-        <img src="{{article.image_url}}" alt="John_Lenin">
+        {% if article.image_file %}
+        <img src="{{article.image_file.url}}" alt="">
+        {% else %}
+        No Image 
+        {% endif %}
         </a>
     </article>
      <hr>

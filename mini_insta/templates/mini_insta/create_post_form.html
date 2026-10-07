@@ -1,0 +1,18 @@
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+<form action="{% url 'create_post' profile.pk %}" method="POST"
+    enctype="multipart/form-data"> 
+    {% csrf_token %}
+     <table>
+    {{form.as_table}}
+    </table>
+    <p> Please Enter any images here: </p><input type="file" name="files" multiple>
+    <br><br>
+    <input type="submit" name="submit" value="submit">
+</form>
+<br><br>
+    <nav>
+        <li><a href="{% url 'show_all_profiles' %}"> Click Here to Cancel </a></li>
+    </nav>
+{% endblock %}

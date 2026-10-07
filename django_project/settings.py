@@ -154,3 +154,7 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/alvs/static/'
     MEDIA_URL = '/alvs/media/'
+
+# Declarations to reference media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "/media/"

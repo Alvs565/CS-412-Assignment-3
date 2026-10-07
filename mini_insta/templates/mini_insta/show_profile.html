@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<!-- Displays the QuerySet of all Articles: -->
+<!-- Displays the QuerySet of all Profiles: -->
 <!--{{articles}} -->
 
 <main class="grid-container">
@@ -10,16 +10,29 @@
         <div>
             <h2> {{profile.username}}</h2>
             <h3> {{profile.display_name}}</h3>
-            <h4> {{profile.join_date}} </h4>
-            <br>
+            <h4> Joined On: {{profile.join_date}} </h4>
             <p>
                 {{profile.bio_text}}
             </p>
-            <br><br>
         </div>
 
         <img src="{{profile.profile_image_url}}" alt="img">
+        <br>
     </article>
-     <hr>
 </main>
+
+     <h2> Posts from this User: </h2>
+        <br> 
+        <div>
+            {% for post in profile.get_all_posts %}
+                <a href="{% url 'post' post.pk %}">
+                    {% if post.get_all_photos %}
+                        <img src="{{post.get_all_photos.first.get_image_url}}">
+                    {% else %}
+                        <p> NO IMAGE </p>
+                {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+
 {% endblock %}

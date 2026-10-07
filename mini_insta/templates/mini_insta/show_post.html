@@ -1,0 +1,17 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<main class="grid-container">
+     <article>
+        {% for photo in post.get_all_photos %}
+            <img src="{{photo.get_image_url}}">
+        {% endfor %}
+
+        <div>
+            <h3> {{post.caption}} </h3>
+            <h4> <strong> Posted on: {{post.timestamp}} </strong></h4>
+        </div>
+    </article>
+
+  {% endblock %}

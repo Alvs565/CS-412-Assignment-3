@@ -11,6 +11,9 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'show_all_profiles' %}">All Profiles</a></li>
+                    {% if profile %}
+                    <li> <a href="{% url 'create_post' profile.pk %}"> Create a Post</a> </li>
+                    {% endif %}
                 </ul>
             </nav>
         </head> 
