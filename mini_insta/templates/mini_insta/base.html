@@ -13,6 +13,7 @@
                     <li><a href="{% url 'show_all_profiles' %}">All Profiles</a></li>
                     {% if profile %}
                     <li> <a href="{% url 'create_post' profile.pk %}"> Create a Post</a> </li>
+                    <li><a href="{% url 'feed' profile.pk %}"> {{profile.display_name}}'s Feed </a></li>
                     {% endif %}
                 </ul>
             </nav>

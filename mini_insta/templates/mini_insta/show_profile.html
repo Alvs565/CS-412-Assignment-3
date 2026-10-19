@@ -10,7 +10,10 @@
         <div>
             <h2> {{profile.username}}</h2>
             <h3> {{profile.display_name}}</h3>
+            <h3> <a href="{% url 'show_followers' profile.pk %}"> {{profile.get_num_followers}} followers</a></h3>
+            <h3> <a href="{% url 'show_following' profile.pk %}"> {{profile.get_num_following}} Profiles Followed </a></h3>
             <h4> Joined On: {{profile.join_date}} </h4>
+            <a href="{% url 'update_profile' profile.pk %}"> Update Profile </a>
             <p>
                 {{profile.bio_text}}
             </p>

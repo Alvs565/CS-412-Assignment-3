@@ -12,6 +12,22 @@
             <h3> {{post.caption}} </h3>
             <h4> <strong> Posted on: {{post.timestamp}} </strong></h4>
         </div>
+        <a href="{% url 'delete_post' post.pk %}"> Delete Post</a> <br>
+
+        <h3> See Likes: </h3>
+         {% for like in post.get_likes %}
+            <p> {{like.profile}} </p>
+        {% endfor %}
+
+
+
+        <h3> See Comments: </h3>
+        {% for comment in post.get_all_comments %}
+            <p> {{comment}} </p>
+        {% endfor %}
+
     </article>
+
+
 
   {% endblock %}

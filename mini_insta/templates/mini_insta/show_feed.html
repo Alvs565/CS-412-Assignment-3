@@ -1,0 +1,31 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<h2>{{ profile.display_name }}'s Feed</h2>
+
+{% for post in profile.get_post_feed %}
+<article>
+
+    {% if post.get_all_photos %}
+        <a href="{% url 'post' post.pk %}">
+            <img src="{{ post.get_all_photos.first.get_image_url }}" alt="post photo">
+        </a>
+    {% else %}
+        <p>NO IMAGE</p>
+    {% endif %}
+
+    <p>{{ post.caption }}</p>
+    <p><small>{{ post.timestamp }}</small></p>
+
+    <p>Liked by: {{ post.get_likes}} </p>
+
+    <h4>Comments:</h4>
+    {% for comment in post.get_all_comments %}
+        <p>{{ comment }}</p>
+    {% endfor %}
+
+</article>
+{% endfor %}
+
+{% endblock %}

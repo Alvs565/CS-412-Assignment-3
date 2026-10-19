@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-from .models import Article
-from .forms import CreateArticleForm, CreateCommentForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Article, Comment
+from .forms import CreateArticleForm, CreateCommentForm, UpdateArticleForm
 from django.urls import reverse
 import random
 
@@ -87,6 +87,32 @@ class CreateCommentView(CreateView):
 
         # Delegate work to the superclass method form_valid:
         return super().form_valid(form)
+
+class UpdateArticleView(UpdateView):
+    '''View class to handle update of an article based on its PK'''
+
+    model = Article
+    form_class = UpdateArticleForm
+    template_name = "blog/update_article_form.html"
+
+class DeleteCommentView(DeleteView):
+    '''A view class to handle the deletion of a comment on an article'''
+    
+    model = Comment
+    template_name = "blog/delete_comment_form.html"
+
+    def get_success_url(self):
+        '''Return the URL to redirect to after a sucessful delete'''
+
+        # Find the PK for this comment:
+        pk = self.kwargs['pk']  #kew word argument from url
+        # Find the comment object:
+        comment = Comment.objects.get(pk=pk) # Use object manager to retrieve comment object
+        # find the PK of the article to which this comment is associated:
+        article = comment.article
+        #return a URL to redirect to:
+        return reverse('article', kwargs={'pk':article.pk}) #URL lookup method, using key word arguments
+
 
     
 

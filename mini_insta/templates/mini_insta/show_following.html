@@ -1,0 +1,12 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div>
+    <h2> {{following.display_name}} has {{following.get_num_followers}} followers </h2>
+    <br>
+    <h3> See The List of Followers {{following.display_name}} has: <br>
+        {{following.get_followers}} </h3>
+</div>
+
+  {% endblock %}
