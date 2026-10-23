@@ -1,0 +1,15 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        {{user_form.as_table}}
+        {{form.as_table}}
+    </table>
+    <br>
+    <input type="submit" name="submit" value="submit">
+</form>
+
+{% endblock %}

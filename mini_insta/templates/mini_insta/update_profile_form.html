@@ -4,7 +4,7 @@
  {% block content %}
  <h1> Update this Profile: </h1>
 
- <form action="{% url 'update_profile' profile.pk %}" method="POST" 
+ <form action="{% url 'update_profile'%}" method="POST" 
 enctype="multipart/form-data">
 
     {% csrf_token %}    
@@ -16,7 +16,7 @@ enctype="multipart/form-data">
 </form>
 
 <!-- Form if you would like to cancel updates -->
- <form action="{% url 'profile' profile.pk %}" method="GET">
+ <form action="{% url 'show_my_profile' %}" method="GET">
     <input type="submit" name="Cancel" value="Cancel updates">
  </form>
  

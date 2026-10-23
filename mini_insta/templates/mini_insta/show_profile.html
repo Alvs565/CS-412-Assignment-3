@@ -1,7 +1,6 @@
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
-
 <!-- Displays the QuerySet of all Profiles: -->
 <!--{{articles}} -->
 
@@ -13,7 +12,22 @@
             <h3> <a href="{% url 'show_followers' profile.pk %}"> {{profile.get_num_followers}} followers</a></h3>
             <h3> <a href="{% url 'show_following' profile.pk %}"> {{profile.get_num_following}} Profiles Followed </a></h3>
             <h4> Joined On: {{profile.join_date}} </h4>
-            <a href="{% url 'update_profile' profile.pk %}"> Update Profile </a>
+            {% if request.user == profile.user %}
+            <nav>
+                <li><a href="{% url 'search' %}"> Search </a></li>
+                -
+                <li> <a href="{% url 'create_post' %}"> Create a Post</a> </li>
+                -
+                <li><a href="{% url 'feed' %}"> {{profile.display_name}}'s Feed </a></li>
+                -
+                <li><a href="{% url 'update_profile' %}"> Update Profile </a></li>
+            </nav>
+            {% endif %}
+            
+            {% if request.user.is_authenticated and request.user != profile.user %}
+            <a href="{% url 'follow' profile.pk %}">Follow</a>
+            <a href="{% url 'delete_follow' profile.pk %}">Unfollow</a>
+            {% endif %}
             <p>
                 {{profile.bio_text}}
             </p>

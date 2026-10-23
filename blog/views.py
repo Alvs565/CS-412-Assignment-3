@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Article, Comment
 from .forms import CreateArticleForm, CreateCommentForm, UpdateArticleForm
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin # for authentication
+from django.contrib.auth.forms import UserCreationForm # for new user
+from django.contrib.auth.models import User # the Django User model
 import random
 
 # Create your views here.
@@ -38,18 +41,26 @@ class RandomArticleView(DetailView):
 # define a subclass of CreateView to handle creation of Article objects
 # (1) display the HTML form to the user (GET)
 # (2) process the form submission and store the new Article object (POST)
-class CreateArticleView(CreateView):
+class CreateArticleView(LoginRequiredMixin, CreateView): # Cannot access this unless we are logged in
     '''A view to handle the creation of a new Article'''
 
     form_class = CreateArticleForm
     template_name = "blog/create_article_form.html"
 
+    def get_login_url(self):
+        '''return the URL for this app's login page'''
+        return reverse('login')
+    
     def form_valid(self, form):
         '''Override the default method to add some debug information'''
 
+        # Find the logged in user, and attach that user to the form instance (Article)
+        # Find User:
+        user = self.request.user
+        form.instance.user = user
+
         # Delegate some work to the superclass to do the rest
         return super().form_valid(form)
-
 
 class CreateCommentView(CreateView):
     '''A view to handle creation of a new Comment on an Article'''
@@ -112,6 +123,18 @@ class DeleteCommentView(DeleteView):
         article = comment.article
         #return a URL to redirect to:
         return reverse('article', kwargs={'pk':article.pk}) #URL lookup method, using key word arguments
+
+class UserRegistrationView(CreateView):
+    '''A view to show/process the registration form to create a new User'''
+
+    template_name = 'blog/register.html'
+    form_class = UserCreationForm
+    model = User
+
+    def get_success_url(self):
+        '''The URL to redirect to after sucessful registration'''
+        return reverse('login')
+
 
 
     

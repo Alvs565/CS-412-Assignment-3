@@ -1,0 +1,17 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h1> Results: </h1>
+
+<h3> Profiles: </h3>
+{% for p in profiles %}
+    <p><a href="{% url 'profile' p.pk %}"> {{p.username}}</a>({{p.display_name}})</p>
+{% endfor %}
+
+<hr>
+<h3> Posts: </h3>
+{% for post in posts %}
+    <p><a href="{% url 'post' post.pk %}"> {{post.caption}}</a> by {{post.profile.username}}</p>
+{% endfor %}
+
+{% endblock %}

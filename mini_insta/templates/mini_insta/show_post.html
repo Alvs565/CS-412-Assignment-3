@@ -12,14 +12,19 @@
             <h3> {{post.caption}} </h3>
             <h4> <strong> Posted on: {{post.timestamp}} </strong></h4>
         </div>
+        {% if request.user == post.profile.user %}
         <a href="{% url 'delete_post' post.pk %}"> Delete Post</a> <br>
+        {% endif %}
 
         <h3> See Likes: </h3>
          {% for like in post.get_likes %}
             <p> {{like.profile}} </p>
         {% endfor %}
 
-
+        {% if request.user.is_authenticated and request.user != profile.user %}
+        <a href="{% url 'like' post.pk %}">Like</a>
+        <a href="{% url 'delete_like' post.pk %}">Unlike</a>
+        {% endif %}
 
         <h3> See Comments: </h3>
         {% for comment in post.get_all_comments %}

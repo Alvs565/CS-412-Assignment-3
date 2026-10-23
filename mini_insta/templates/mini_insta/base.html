@@ -11,16 +11,31 @@
             <nav>
                 <ul>
                     <li><a href="{% url 'show_all_profiles' %}">All Profiles</a></li>
-                    {% if profile %}
-                    <li> <a href="{% url 'create_post' profile.pk %}"> Create a Post</a> </li>
-                    <li><a href="{% url 'feed' profile.pk %}"> {{profile.display_name}}'s Feed </a></li>
+                    {% if request.user.is_authenticated %}
+                    <br><br>
+                   <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="logout">
+                   </form>
+                    {% else %}
+                    <li><a href="{% url 'login' %}"> Login </a></li>
+                    <li><a href="{% url 'create_profile' %}"> Create a Profile </a></li> 
                     {% endif %}
                 </ul>
             </nav>
+            <hr>
+            {% if request.user.is_authenticated %}
+                Logged in as: {{request.user}}
+                <a href="{% url 'show_my_profile' %}"> Your Profile </a>
+            {% else %}
+                Not logged in.
+            {% endif %}
         </head> 
 
 
         {% block content %}
         {% endblock %}
     </body>
+
 </html>
+
